@@ -1,4 +1,4 @@
-# conversation-to-long-image
+# chat-to-img / conversation-to-long-image
 
 将当前对话或聊天记录文件（Markdown / TXT / JSON）渲染为美观的 PNG 长图与独立 HTML，支持完整 / 摘要模式、浅色 / 深色主题，超长对话自动分页拆分。
 
