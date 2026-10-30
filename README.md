@@ -1,155 +1,69 @@
-# chat-to-img / conversation-to-long-image
+[English](README.en.md)
 
-将当前对话或聊天记录文件（Markdown / TXT / JSON）渲染为美观的 PNG 长图与独立 HTML，支持完整 / 摘要模式、浅色 / 深色主题，超长对话自动分页拆分。
+# 对话转长图（conversation-to-long-image）
 
-> Render a conversation (or a Markdown/TXT/JSON transcript) into a polished PNG
-> long image and a standalone HTML document.
+将当前对话或一份聊天记录（Markdown / TXT / JSON）安全渲染为一张美观的 PNG 长图与一份独立 HTML。支持完整 / 摘要两种模式、浅色 / 深色两套主题，超长对话自动分页拆分。
 
-This skill follows the open **Agent Skills** specification and is designed to be
-installed and used by any compatible agent — Claude Code, OpenAI Codex, WorkBuddy,
-and others — as well as directly from the command line.
+## 安装
 
-## Features
-
-- **Cross-agent**: no WorkBuddy-specific dependencies. Works anywhere Node.js 18+ and a Chromium-based browser are available.
-- **Cross-platform**: Chrome/Chromium/Edge discovery on macOS, Windows, and Linux.
-- **Inputs**: current conversation context, or a transcript file (`.json`, `.md`, `.markdown`, `.txt`).
-- **Themes**: light and dark.
-- **Modes**: full (verbatim) and summary.
-- **Auto-splitting**: long conversations are split into multiple PNG parts that never lose or duplicate content.
-- **Safe rendering**: Markdown is sanitized; remote images become placeholders; local images are inlined as data URIs.
-
-## Repository layout
+直接告诉你的智能体，安装这个技能即可：
 
 ```
-conversation-to-long-image/
-├── SKILL.md                  # Agent Skills entry point (Anthropic-compatible frontmatter)
-├── README.md
-├── LICENSE                   # MIT
-├── package.json              # Isolated runtime dependency manifest
-├── package-lock.json         # Pinned dependency tree for reproducible installs
-├── scripts/
-│   ├── render.cjs            # Render normalized JSON -> HTML + PNG(s) + manifest
-│   ├── normalize.cjs         # Convert transcript files -> normalized JSON
-│   └── ensure_deps.cjs       # Check / install isolated runtime
-├── assets/
-│   ├── template.html         # HTML template (CSP-hardened)
-│   ├── conversation.css      # Light/dark styles
-│   └── icon.png              # Skill icon
-└── references/
-    ├── input-schema.md       # Normalized JSON schema
-    └── runtime-setup.md      # Runtime and browser setup
+git@github.com:avehub/chat_to_img.git
 ```
 
-## Installation
+本技能遵循开放的 **Agent Skills** 规范，主流智能体框架克隆后即可使用，例如：
 
-Clone or download this folder, then place it into your agent's skills directory.
-
-### Claude Code (Anthropic Agent Skills)
-
-```bash
-git clone <your-repo-url> conversation-to-long-image
-mkdir -p ~/.claude/skills
-cp -r conversation-to-long-image ~/.claude/skills/
-```
-
-Claude Code will then load it automatically based on the `description` trigger.
-
-### OpenAI Codex / generic Agent Skills runtime
-
-Copy the folder into the skills directory your runtime expects, e.g.:
-
-```bash
-cp -r conversation-to-long-image ~/.codex/skills/
-```
-
-### WorkBuddy
-
-Copy into the user-level skills directory:
-
-```bash
-cp -r conversation-to-long-image ~/.workbuddy/skills/
-```
-
-or install it through the in-product skill manager.
-
-### Command-line only
-
-No agent required — the scripts run standalone:
-
-```bash
-node scripts/ensure_deps.cjs --install   # installs Node deps into .runtime/
-node scripts/normalize.cjs --input chat.md --output out/conversation.normalized.json
-node scripts/render.cjs --input out/conversation.normalized.json --output-dir out
-```
-
-## Runtime setup
-
-The skill keeps its Node dependencies in an isolated `.runtime/` directory inside
-the skill folder so the host environment is never modified. No browser is
-downloaded.
-
-```bash
-# Check dependencies and browser availability
-node scripts/ensure_deps.cjs
-
-# Install dependencies (requires network + npm)
-node scripts/ensure_deps.cjs --install
-```
-
-A Chromium-based browser (Chrome, Chromium, or Edge) must already be installed.
-If it is not on a default path, pass it explicitly:
-
-```bash
-node scripts/render.cjs --input out/conversation.normalized.json --output-dir out \
-  --chrome "/path/to/chrome"
-```
-
-Override the runtime location with `CONVERSATION_TO_LONG_IMAGE_RUNTIME` or `--runtime`.
-
-## Usage
-
-### 1. Normalize a transcript file (optional)
-
-```bash
-node scripts/normalize.cjs \
-  --input transcript.md \
-  --output out/conversation.normalized.json \
-  --title "我的对话" \
-  --theme dark
-```
-
-### 2. Render
-
-```bash
-node scripts/render.cjs \
-  --input out/conversation.normalized.json \
-  --output-dir out
-```
-
-Outputs (`out/`):
-
-- `conversation.html` — standalone styled HTML
-- `conversation.png` — single image, or `conversation-part-001.png`, `conversation-part-002.png`, … when split
-- `conversation.normalized.json` — copy of the normalized input
-- `manifest.json` — metadata, part list, and warnings
-
-### Environment variables
-
-| Variable | Purpose |
+| 智能体 | 安装命令 |
 | --- | --- |
-| `CONVERSATION_TO_LONG_IMAGE_RUNTIME` | Override the isolated runtime directory |
-| `CONVERSATION_TO_LONG_IMAGE_CHROME` | Override the browser executable path |
-| `CONVERSATION_TO_LONG_IMAGE_NPM` | Override the `npm` executable used by `--install` |
-| `CONVERSATION_TO_LONG_IMAGE_MODEL` | Default model label when not set in the input |
-| `CONVERSATION_TO_LONG_IMAGE_TOOL` | Default exporter tool name shown in the image header |
-| `CONVERSATION_TO_LONG_IMAGE_DEBUG` | Print full error stacks |
+| Claude Code | `git clone git@github.com:avehub/chat_to_img.git ~/.claude/skills/conversation-to-long-image` |
+| Codex | `git clone git@github.com:avehub/chat_to_img.git ~/.codex/skills/conversation-to-long-image` |
+| WorkBuddy | `git clone git@github.com:avehub/chat_to_img.git ~/.workbuddy/skills/conversation-to-long-image` |
+| DeepSeek-Harness | `git clone git@github.com:avehub/chat_to_img.git <skills 目录>/conversation-to-long-image` |
 
-## Input schema
+> 提示：多数情况下，只需对智能体说「安装 git@github.com:avehub/chat_to_img.git 这个技能」，它会自动完成克隆与加载。
 
-See [`references/input-schema.md`](references/input-schema.md) for the normalized
-JSON contract (roles, formats, summary mode, image handling, and export-command hiding).
+## 使用
 
-## License
+1. （可选）归一化一份聊天记录文件：
+   ```bash
+   node scripts/normalize.cjs --input chat.md --output out/conversation.normalized.json
+   ```
+2. 渲染为长图与 HTML：
+   ```bash
+   node scripts/render.cjs --input out/conversation.normalized.json --output-dir out
+   ```
 
-MIT — see [`LICENSE`](LICENSE).
+要渲染「当前对话」，请先按 [`references/input-schema.md`](references/input-schema.md) 写出归一化 JSON，再执行上面的渲染命令。
+
+输出（`out/`）：
+- `conversation.html` —— 独立样式 HTML
+- `conversation.png`（或 `conversation-part-001.png`、`002.png`… 分页时） —— 长图
+- `conversation.normalized.json` —— 归一化输入副本
+- `manifest.json` —— 元数据、分页清单与警告
+
+## 运行时准备
+
+技能把 Node 依赖隔离安装在 `.runtime/` 目录，**不会下载浏览器**。
+
+```bash
+node scripts/ensure_deps.cjs            # 检查依赖与浏览器
+node scripts/ensure_deps.cjs --install # 安装依赖（需要 npm 与网络）
+```
+
+需本机已安装基于 Chromium 的浏览器（Chrome / Chromium / Edge）。若不在默认路径，用 `--chrome <path>` 指定。
+
+## 环境变量
+
+| 变量 | 作用 |
+| --- | --- |
+| `CONVERSATION_TO_LONG_IMAGE_RUNTIME` | 覆盖隔离运行时目录 |
+| `CONVERSATION_TO_LONG_IMAGE_CHROME` | 覆盖浏览器可执行文件路径 |
+| `CONVERSATION_TO_LONG_IMAGE_NPM` | 覆盖 `npm` 可执行文件 |
+| `CONVERSATION_TO_LONG_IMAGE_MODEL` | 默认模型标签 |
+| `CONVERSATION_TO_LONG_IMAGE_TOOL` | 默认导出工具名 |
+| `CONVERSATION_TO_LONG_IMAGE_DEBUG` | 打印完整错误栈 |
+
+## 许可证
+
+[MIT](LICENSE)
