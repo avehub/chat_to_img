@@ -1,0 +1,145 @@
+:root {
+  color-scheme: light;
+  --bg: #f3f5f8;
+  --paper: #ffffff;
+  --text: #20242c;
+  --muted: #707785;
+  --line: #e0e4ea;
+  --accent: #2868b2;
+  --accent-line: #b8d2ef;
+  --accent-soft: #e9f2fd;
+  --user-text: #20364e;
+  --assistant: #ffffff;
+  --code-bg: #f2f4f7;
+  --code-text: #263142;
+  --link: #185fa5;
+  --badge-bg: #2f343d;
+  --badge-text: #ffffff;
+}
+html.dark {
+  color-scheme: dark;
+  --bg: #15171b;
+  --paper: #1e2127;
+  --text: #e7e9ed;
+  --muted: #a4acb9;
+  --line: #393f49;
+  --accent: #85b7eb;
+  --accent-line: #456581;
+  --accent-soft: #25364a;
+  --user-text: #e3eef8;
+  --assistant: #24272e;
+  --code-bg: #171a1f;
+  --code-text: #dce2ea;
+  --link: #85b7eb;
+  --badge-bg: #85b7eb;
+  --badge-text: #17202b;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; min-height: 100%; padding: 0; background: var(--bg); }
+body {
+  min-width: 1080px;
+  color: var(--text);
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 17px;
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+}
+.page { width: 1080px; margin: 0 auto; padding: 46px 48px 34px; background: var(--paper); }
+.document-header { padding-bottom: 26px; margin-bottom: 30px; border-bottom: 1px solid var(--line); }
+.brand {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 4px 10px;
+  border: 1px solid var(--accent-line);
+  border-radius: 6px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+h1 { margin: 0 0 15px; font-size: 31px; line-height: 1.4; font-weight: 500; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.source { display: flex; flex-direction: column; gap: 3px; color: var(--muted); font-size: 14px; }
+.source strong { color: var(--muted); font-weight: 500; }
+.summary-note:empty { display: none; }
+.summary-note { margin-top: 10px; color: var(--muted); font-size: 13px; }
+.part-label { margin-top: 14px; color: var(--accent); font-size: 14px; font-weight: 500; }
+.messages { display: flex; flex-direction: column; gap: 28px; }
+.message { display: flex; flex-direction: column; }
+.message.user { align-items: flex-end; }
+.message.assistant { align-items: flex-start; }
+.message-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 4px 7px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.message.user .message-header { color: var(--accent); }
+.message-time { margin-left: 8px; overflow-wrap: anywhere; }
+.ai-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background: var(--badge-bg);
+  color: var(--badge-text);
+  font-size: 11px;
+  font-weight: 500;
+}
+.message-content { overflow-wrap: anywhere; }
+.message.user .message-content {
+  max-width: 82%;
+  padding: 16px 21px;
+  border: 1px solid var(--accent-line);
+  border-radius: 16px 16px 4px 16px;
+  background: var(--accent-soft);
+  color: var(--user-text);
+}
+.message.assistant .message-content {
+  width: 94%;
+  padding: 21px 25px 23px;
+  border: 1px solid var(--line);
+  border-radius: 4px 16px 16px 16px;
+  background: var(--assistant);
+}
+.message-content > *:first-child { margin-top: 0; }
+.message-content > *:last-child { margin-bottom: 0; }
+.message-content p { margin: 0 0 14px; }
+.message-content h1, .message-content h2, .message-content h3,
+.message-content h4, .message-content h5, .message-content h6 {
+  margin: 24px 0 12px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+.message-content h1 { font-size: 26px; }
+.message-content h2 { font-size: 22px; }
+.message-content h3 { font-size: 19px; }
+.message-content h4, .message-content h5, .message-content h6 { font-size: 18px; }
+.message-content ul, .message-content ol { margin: 10px 0 16px; padding-left: 28px; }
+.message-content li { margin: 5px 0; }
+.message-content blockquote { margin: 16px 0; padding: 11px 15px; border-left: 4px solid var(--accent); background: var(--code-bg); color: var(--muted); }
+.message-content a { color: var(--link); text-decoration: underline; overflow-wrap: anywhere; }
+.message-content hr { border: 0; border-top: 1px solid var(--line); margin: 24px 0; }
+code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-size: 0.9em; color: var(--code-text); }
+:not(pre) > code { padding: 2px 5px; border-radius: 5px; background: var(--code-bg); }
+pre { margin: 16px 0; padding: 16px 18px; border: 1px solid var(--line); border-radius: 10px; background: var(--code-bg); white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; line-height: 1.6; }
+pre code { white-space: inherit; }
+table { width: 100%; margin: 16px 0; border-collapse: collapse; table-layout: fixed; font-size: 15px; }
+th, td { padding: 10px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+th { background: var(--code-bg); font-weight: 500; }
+img { display: block; max-width: 100%; height: auto; margin: 14px auto; border-radius: 8px; }
+.image-placeholder { padding: 12px 14px; border: 1px dashed var(--line); border-radius: 8px; color: var(--muted); background: var(--code-bg); font-size: 14px; overflow-wrap: anywhere; }
+.document-footer { margin-top: 32px; padding-top: 17px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; text-align: center; }
+.hljs-keyword, .hljs-selector-tag, .hljs-literal { color: #7c3aad; }
+.hljs-string, .hljs-attr, .hljs-template-string { color: #24744a; }
+.hljs-number, .hljs-symbol { color: #a14d12; }
+.hljs-comment, .hljs-quote { color: #78818d; }
+.hljs-title, .hljs-name, .hljs-function { color: #185fa5; }
+body.dark .hljs-keyword, body.dark .hljs-selector-tag, body.dark .hljs-literal { color: #cecbf6; }
+body.dark .hljs-string, body.dark .hljs-attr, body.dark .hljs-template-string { color: #9fe1cb; }
+body.dark .hljs-number, body.dark .hljs-symbol { color: #fac775; }
+body.dark .hljs-title, body.dark .hljs-name, body.dark .hljs-function { color: #85b7eb; }
