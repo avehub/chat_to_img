@@ -1,0 +1,12 @@
+{
+  "name": "conversation-to-long-image-runtime",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Isolated rendering dependencies for the conversation-to-long-image Agent Skill",
+  "dependencies": {
+    "playwright-core": "1.56.1",
+    "markdown-it": "14.1.0",
+    "sanitize-html": "2.17.0",
+    "highlight.js": "11.11.1"
+  }
+}
