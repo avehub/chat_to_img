@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN" class="{{THEME_CLASS}}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; object-src 'none'; script-src 'none'">
+  <title>{{TITLE}}</title>
+  <style>{{CSS}}</style>
+</head>
+<body class="{{THEME_CLASS}}">
+  <main class="page">
+    <header class="document-header">
+      <div class="brand">对话长图</div>
+      <h1>{{TITLE}}</h1>
+      <div class="source">{{SOURCE}}</div>
+      <div class="summary-note">{{SUMMARY_NOTE}}</div>
+      <div class="part-label" id="part-label" hidden>{{PART_LABEL}}</div>
+    </header>
+    <section class="messages" aria-label="对话消息">
+      {{MESSAGES}}
+    </section>
+    <footer class="document-footer">本地生成 · 对话内容按角色重新排版</footer>
+  </main>
+</body>
+</html>
