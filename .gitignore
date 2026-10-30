@@ -1,0 +1,13 @@
+# Isolated runtime (installed by ensure_deps.cjs --install)
+.runtime/
+node_modules/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.log
+
+# Generated outputs (example output dirs)
+output/
+out/
+dist/
